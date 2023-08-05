@@ -3,14 +3,11 @@ extern crate dotenv;
 pub mod models;
 use crate::schema::*;
 use diesel::prelude::*;
-use dotenv::dotenv;
 use models::{NewTodo, Todo};
-use std::env;
 
-pub fn establish_connection() -> SqliteConnection { // creates a new connection to the DB and returns reference
-    dotenv().ok();
 
-    let database_url = env::var("DATABASE_URL").expect("DATABASE_URL must be set");
+pub fn establish_connection(database_url:&str) -> SqliteConnection { // creates a new connection to the DB and returns reference
+    // let database_url = "./store.sqlite";
     SqliteConnection::establish(&database_url)
         .unwrap_or_else(|_| panic!("Error connecting to {}", database_url))
 }
